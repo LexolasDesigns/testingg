@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Interactive Resume</title>
+	<link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Indie+Flower|Ranga" rel="stylesheet">
+
+	<style type="text/css">
+		#scrollBox{
+			background-color: grey;
+			height: 6500px;
+			width: 100%;
+			overflow: hidden;
+		}
+		#cloud1{
+			height: 700px;
+			width: 6500px;
+			background-image: url(clouds-01.png);
+			background-repeat: repeat-x;
+			position: relative;
+			
+		}		
+		#cloud2{
+			height: 700px;
+			width: 6500px;
+			background-image: url(clouds-02.png);
+			background-repeat: repeat-x;
+			position: relative;
+		}
+		#ground{
+			background-image: url(ground.png);
+			height: 900px;
+			width: 6500px;
+			top: 90vh;
+			left: -10px;
+			background-repeat: repeat-x;
+			position: fixed;
+		}
+		#ground2{
+			background-image: url(hills.png);
+			height: 700px;
+			width: 6500px;
+			top: 70vh;
+			left: -10px;
+			background-repeat: repeat-x;
+			position: fixed;
+		}
+		#page{
+			height: 100vh;
+			width: 100vw;
+			background-color: #81C5E2;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+		}
+		#dragon{
+			background: url('dragon.png') no-repeat -19px -13px;
+			width: 183px;
+			height: 188px;
+			position: fixed;
+			left: 200px;
+			top: 100px;
+		}
+		#fireball{
+			background-image: url("fireball.png");
+			background-repeat: no-repeat;
+			width: 183px;
+			height: 188px;
+			position: fixed;
+			right: 0px;
+			top: 100px;
+		}
+		#fireballTwo{
+			background-image: url("fireball.png");
+			background-repeat: no-repeat;
+			width: 183px;
+			height: 188px;
+			position: fixed;
+			right: 0px;
+			top: 200px;
+			
+		}
+		#heart1{
+			z-index: 1;
+			background-image: url("heart-01.png");
+			background-repeat: no-repeat;
+			width: 200px;
+			height: 50px;
+			position: fixed;
+			left: 100px;
+			top: 10px;
+		}
+		#heart2{
+			z-index: 1;
+			background-image: url("heart-02.png");
+			background-repeat: no-repeat;
+			width: 200px;
+			height: 50px;
+			position: fixed;
+			left: 50px;
+			top: 10px;
+		}
+		#heart3{
+			z-index: 1;
+			background-image: url("heart-03.png");
+			background-repeat: no-repeat;
+			width: 200px;
+			height: 50px;
+			position: fixed;
+			left: 150px;
+			top: 10px;
+		}
+		#gem{
+			background-image: url("gem.png");
+			background-repeat: no-repeat;
+			width: 183px;
+			height: 188px;
+			position: fixed;
+			right: 0px;
+			top: 100px;
+		}
+		#gem2{
+			background-image: url("gem.png");
+			background-repeat: no-repeat;
+			width: 183px;
+			height: 188px;
+			position: fixed;
+			right: 0px;
+			top: 100px;
+		}
+		#points{
+			width: 200px;
+			height: 188px;
+			position: fixed;
+			left: 500px;
+			top: 10px;
+			color: white;
+			font-size: 30px;
+			font-family: helvetica;
+		}
+		#points{
+			width: 100px;
+			height: 50px;
+			position: fixed;
+			left: 1100px;
+			top: 10px;
+			border-radius: 20%;
+		}
+		.count{
+		  color:#7A1717;
+		  margin-left:30px;
+		  font-size: 30px;
+		  font-family: "Ranga";
+		}
+		#level{
+		  color:white;
+		  left:30px;
+		  top: 85vh;
+		  font-size: 35px;
+		  font-family: "Gloria Hallelujah";
+		  position: fixed;
+		  float: left;
+		}
+		#heartBox{
+			position: fixed;
+			left: 10px;
+			top: 10px;
+			width: 156px;
+			height: 52px;
+		}
+		.hearts{
+			z-index: 0;
+			background-image: url("heart-01.png");
+			background-repeat: no-repeat;
+			width: 52px;
+			height: 52px;
+			float: left;
+		}
+		#gemCounter {
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			font-size: 40px;
+			color: white;
+		}
+	</style>
+</head>
+<body id="main">
+	<div id="lightning"></div>
+	<div id="scrollBox"></div>
+
+	<div id="page">	
+		<div id="cloud2">
+			<div id="cloud1"></div>
+		</div>
+		
+	</div>
+	</div>
+			<div id="ground2"></div>
+			<div id="ground"></div>
+			<div id="dragon"></div>
+			<div id="fireball"></div>
+			<div id="fireballTwo"></div>
+			<div id="heartBox">
+				<div class="hearts"></div>
+				<div class="hearts"></div>
+				<div class="hearts"></div>
+			</div>
+			<div id="gem"></div>
+			<div id="gem2"></div>
+
+			
+			<div id="level">Level 1</div>
+			<div id="gemCounter"></div>	
+			<!-- <div id="points"><span class="count">15000</span></div> -->
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+<script src="jquery-ui.min.js"></script>
+
+	<script>
+
+	var sBox = document.getElementById("scrollBox");
+	var body = document.getElementById("main");
+	var cloud1 = document.getElementById("cloud1");
+	var dragon = document.getElementById("dragon");
+	var fireball = document.getElementById("fireball");
+	var fireballTwo = document.getElementById("fireballTwo");
+	var animationCounter = 0;
+	var myTimer;
+	var stopTimer;
+	var characterAnimating = false;
+	var gem = document.getElementById("gem");
+	var ground = document.getElementById("ground");
+	var hills = document.getElementById("ground2");
+	var gem1Hitting = false;
+	var gemCount = 0;
+	var heartCount = 0;
+	var heartArray = document.getElementsByClassName("hearts");
+	
+
+	var dragonTimer = setInterval(animateDragon, 100);
+
+	function animateDragon(){
+		animationCounter ++;
+
+		if( animationCounter == 1 ){
+			dragon.style.background = "url('dragon.png') no-repeat -208px -13px";
+		} else if (animationCounter == 2){
+			dragon.style.background = "url('dragon.png') no-repeat -401px -14px";
+		}	else if (animationCounter == 3){
+			dragon.style.background = "url('dragon.png') no-repeat -19px -13px";
+			animationCounter = 0;
+		}
+	}
+
+	$("#fireball").animate({left:"-200px"}, 2000, resetFball);
+	function resetFball(){
+		$("#fireball").css("display", "block");
+		var docHeight = Math.random()* $(window).innerHeight();
+		$("#fireball").css("left", "2000px");
+		$("#fireball").css("top", docHeight + "px");
+		$("#fireball").animate({left: "-2000px"}, Math.random() * 3000 + 3000, resetFball);
+	}
+
+	$("#fireballTwo").animate({left:"-200px"}, 3000, resetFballTwo);
+	function resetFballTwo(){
+		$("#fireballTwo").css("display", "block");
+		var docHeight = Math.random()* $(window).innerHeight();
+		$("#fireballTwo").css("left", "2000px");
+		$("#fireballTwo").css("top", docHeight + "px");
+		$("#fireballTwo").animate({left: "-2000px"}, Math.random() * 3000 + 3000, resetFballTwo);
+	}
+
+	$("#gem").animate({left:"-200px"}, 3000, resetGem);
+	function resetGem(){
+		$("#gem").css("display", "block");
+		var docHeight = Math.random()* $(window).innerHeight();
+		$("#gem").css("left", "2000px");
+		$("#gem").css("top", docHeight + "px");
+		$("#gem").animate({left: "-2000px"}, Math.random() * 3000 + 10000, resetGem);
+	}
+
+	$("#gem2").animate({left:"-200px"}, 3000, resetGemTwo);
+	function resetGemTwo(){
+		$("#gem2").css("display", "block");
+		var docHeight = Math.random()* $(window).innerHeight();
+		$("#gem2").css("left", "2000px");
+		$("#gem2").css("top", docHeight + "px");
+		$("#gem2").animate({left: "-2000px"}, Math.random() * 3000 + 10000, resetGemTwo);
+	}
+
+	var gameLoop = setInterval(loop, 50);
+	var pos = 0
+
+
+	function loop(){
+
+		pos += 10;
+
+		cloud1.style.left = String( pos * (-.2)) + "px";
+		cloud2.style.left = String( pos * (-.1)) + "px";
+		ground.style.left = String( pos * (-.5)) + "px";
+		hills.style.left = String( pos * (-.1)) + "px";
+
+
+	var fireballPos = $("#fireball").position();
+    var dragonPos = $("#dragon").position();
+    var fireballPosTwo = $("#fireballTwo").position();
+    var dragonPosTwo = $("#dragon").position();
+    var gemPos = $("#gem").position();
+    var gemPosTwo = $("#gem2").position();
+    var dragonPosThree = $("#dragon").position();
+    var dragonPosFour = $("#dragon").position();
+    var heart =document.getElementById("heart1");
+    var heartPos = $("#heart1").position();
+
+		     if(
+		         gemPosTwo.left <= dragonPosFour.left +$("#dragon").innerWidth()&&
+		         gemPosTwo.left >= dragonPosFour.left &&
+		         gemPosTwo.top <= dragonPosFour.top + $("#dragon").innerHeight()&&
+		         gemPosTwo.top >= dragonPosFour.top
+		     ){
+		     		$("#gem2").css("display", "none");
+		           	gemCount ++;
+		           	$("#gemCounter").html(gemCount);
+		           	console.log(gemCount)
+		             // $("#dragon").css("filter", "brightness(1.8)");
+		         // $("#heart").css("filter", "opacity(0)");
+
+		     }else if(
+		         gemPos.left <= dragonPosThree.left +$("#dragon").innerWidth()&&
+		         gemPos.left >= dragonPosThree.left &&
+		         gemPos.top <= dragonPosThree.top + $("#dragon").innerHeight()&&
+		         gemPos.top >= dragonPosThree.top
+		     ){
+		            $("#gem").css("display", "none");
+		           	gemCount ++;
+		           	$("#gemCounter").html(gemCount);
+		           	console.log(gemCount)
+
+		             // console.log(gem1Hitting);
+		             // $("#heart").css("filter", "opacity(0)");
+		     }else if(
+		         fireballPosTwo.left <= dragonPosTwo.left +$("#dragon").innerWidth()&&
+		         fireballPosTwo.left >= dragonPosTwo.left &&
+		         fireballPosTwo.top <= dragonPosTwo.top + $("#dragon").innerHeight()&&
+		         fireballPosTwo.top >= dragonPosTwo.top
+		     ){
+		     		$("#fireballTwo").css("display", "none");
+		           	heartCount ++;
+		           	heartArray[heartCount - 1].style.display = "none";
+		           	console.log(heartCount)
+		             // $("#dragon").css("filter", "brightness(1.8)");
+		             // $("#heart3").css("filter", "opacity(0)");
+		     } else if (
+		         fireballPos.left <= dragonPos.left +$("#dragon").innerWidth()&&
+		         fireballPos.left >= dragonPos.left &&
+		         fireballPos.top <= dragonPos.top + $("#dragon").innerHeight()&&
+		         fireballPos.top >= dragonPos.top
+		     ){
+		     		$("#fireball").css("display", "none");
+		           	heartCount ++;
+		           	heartArray[heartCount - 1].style.display = "none";
+		           	console.log(heartCount)
+
+		           // if (heartCount = 3);
+		           // 	alert("You lose!");
+		     		// $("#dragon").css("filter", "brightness(1.8)");
+		             // $("#heart3").css("filter", "opacity(0)");
+		     }
+		      else{
+		      	$("#dragon").css("filter", "brightness(1)");
+		         // $("#heart").css("filter", "opacity(1)");
+		  	}
+
+
+
+}
+$('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 50000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+
+$("#dragon").draggable();
+	</script>
+</body>
+</html>
+
